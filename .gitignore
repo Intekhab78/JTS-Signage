@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment variables (prevent leaking DB credentials / secrets)
+.env
+.env.local
+.env.production
+.env.*.local
+**/.env
+**/.env.local
+**/.env.production
+
+# Build intermediates
+frontend/dist/
+tv-players/android-tv/build/
+tv-players/samsung-tizen/stage/
+**/.gradle/
+
+# Runtime uploads & local data
+backend/uploads/
+backend/data/
+
+# Logs & OS files
+*.log
+.DS_Store
+Thumbs.db

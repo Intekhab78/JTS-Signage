@@ -1,0 +1,14 @@
+{
+  "id": "com.jts.signage",
+  "version": "1.0.0",
+  "vendor": "JTS",
+  "type": "web",
+  "main": "index.html",
+  "title": "JTS Signage",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "disableBackHistoryAPI": true,
+  "bgColor": "#000000",
+  "iconColor": "#2563eb"
+}

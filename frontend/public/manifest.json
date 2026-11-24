@@ -1,0 +1,9 @@
+{
+  "name": "JTS Signage — Digital Signage Platform",
+  "short_name": "JTS Signage",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#000000",
+  "theme_color": "#2563eb",
+  "orientation": "any"
+}
