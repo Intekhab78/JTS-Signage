@@ -73,7 +73,7 @@ Agar TV non-smart hai ya alag-alag older brands ke TV hain, to koi bhi **Windows
 
 ## Server URL Setup (LAN / Cloud)
 
-- Default Server URL: `https://vms-backend-ctea.onrender.com`
+- Default Server URL: `http://72.60.219.218:5055`
 - Agar aap Local Office / LAN Server (`http://<PC_IP>:5000`) use kar rahe hain:
   1. App me **Server Settings** button dabaiye (ya remote se **Menu** / **Back 5x** / **Ctrl+Shift+S** / top-left 5 taps).
   2. Apna Backend Server URL daal kar **Save & Reconnect** dabaiye.

@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var DEFAULT_SERVER_URL = "https://vms-backend-ctea.onrender.com";
+  var DEFAULT_SERVER_URL = "http://72.60.219.218:5055";
   var STORAGE_SERVER_KEY = "jts_server_url";
   var STORAGE_TOKEN_KEY = "jts_screen_token";
   var STORAGE_PLAYLIST_PREFIX = "jts_offline_playlist_";
@@ -133,7 +133,14 @@
   function loadServerUrl() {
     try {
       var saved = localStorage.getItem(STORAGE_SERVER_KEY);
-      if (saved) return normalizeServerUrl(saved);
+      if (saved) {
+        var normalized = normalizeServerUrl(saved);
+        if (normalized === "https://vms-backend-ctea.onrender.com") {
+          localStorage.removeItem(STORAGE_SERVER_KEY);
+          return DEFAULT_SERVER_URL;
+        }
+        return normalized;
+      }
     } catch (_) {}
 
     if (
