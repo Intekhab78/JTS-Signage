@@ -1003,6 +1003,25 @@
     }
   });
 
+  // Auto-fullscreen on first remote click/keydown in standard TV browsers (Samsung/LG)
+  if (
+    typeof location !== "undefined" &&
+    (location.protocol === "http:" || location.protocol === "https:")
+  ) {
+    var requestBrowserFullscreen = function () {
+      try {
+        var el = document.documentElement;
+        if (!document.fullscreenElement && el && el.requestFullscreen) {
+          el.requestFullscreen().catch(function () {});
+        }
+      } catch (_) {}
+      document.removeEventListener("click", requestBrowserFullscreen);
+      document.removeEventListener("keydown", requestBrowserFullscreen);
+    };
+    document.addEventListener("click", requestBrowserFullscreen);
+    document.addEventListener("keydown", requestBrowserFullscreen);
+  }
+
   /* ==================== BOOTSTRAP ==================== */
   requestPlatformWakeLock();
   if (state.screenToken) {

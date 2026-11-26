@@ -64,7 +64,8 @@ function Layout({ children }) {
 
   const hideLayout =
     location.pathname.startsWith("/screen") ||
-    location.pathname.startsWith("/pair");
+    location.pathname.startsWith("/pair") ||
+    location.pathname.startsWith("/tv");
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
@@ -100,6 +101,7 @@ export default function App() {
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/screen/:token" element={<AdScreen />} />
                 <Route path="/pair" element={<PairScreen />} />
+                <Route path="/tv" element={<PairScreen />} />
 
                 {/* Super Admin Only Routes */}
                 <Route

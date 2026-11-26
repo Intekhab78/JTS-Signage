@@ -30,8 +30,60 @@ export default function PairScreen() {
   }, []);
 
   useEffect(() => {
-    requestCode();
-  }, [requestCode]);
+    let cancelled = false;
+    const params = new URLSearchParams(window.location.search);
+    const rePair = params.get("rePair") === "1";
+
+    if (rePair) {
+      try {
+        localStorage.removeItem("vms_saved_screen_token");
+      } catch {
+        // Ignore storage errors
+      }
+      requestCode();
+      return;
+    }
+
+    let savedToken = "";
+    try {
+      savedToken = localStorage.getItem("vms_saved_screen_token") || "";
+    } catch {
+      savedToken = "";
+    }
+
+    if (savedToken) {
+      api
+        .get(`/devices/by-token/${savedToken}`)
+        .then((res) => {
+          if (cancelled) return;
+          if (res.data?.data) {
+            navigate(`/screen/${savedToken}`, { replace: true });
+          } else {
+            try {
+              localStorage.removeItem("vms_saved_screen_token");
+            } catch {
+              // Ignore
+            }
+            requestCode();
+          }
+        })
+        .catch(() => {
+          if (cancelled) return;
+          try {
+            localStorage.removeItem("vms_saved_screen_token");
+          } catch {
+            // Ignore
+          }
+          requestCode();
+        });
+    } else {
+      requestCode();
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [navigate, requestCode]);
 
   useEffect(() => {
     if (!code) return;
@@ -50,6 +102,11 @@ export default function PairScreen() {
 
     socket.on("device_paired", ({ screenToken }) => {
       if (screenToken) {
+        try {
+          localStorage.setItem("vms_saved_screen_token", screenToken);
+        } catch {
+          // Ignore storage errors
+        }
         navigate(`/screen/${screenToken}`, { replace: true });
       }
     });

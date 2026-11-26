@@ -244,6 +244,12 @@ export default function AdScreen() {
         setDEVICE_ID(device.deviceId);
         setLocationId(locId);
 
+        try {
+          localStorage.setItem("vms_saved_screen_token", token);
+        } catch {
+          // Ignore storage errors
+        }
+
         if (device.settings) {
           setSettings({
             volume: device.settings.volume ?? 100,
@@ -263,6 +269,15 @@ export default function AdScreen() {
       })
       .catch((err) => {
         console.error(err);
+        if (err?.response?.status === 404) {
+          try {
+            localStorage.removeItem("vms_saved_screen_token");
+          } catch {
+            // Ignore
+          }
+          window.location.replace("/pair?rePair=1");
+          return;
+        }
         const cached = loadOfflinePlaylist(token);
         if (cached?.ads?.length) {
           setIsOnline(false);
