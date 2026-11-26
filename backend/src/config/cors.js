@@ -1,8 +1,11 @@
 const defaultOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "http://localhost:5000",
+  "http://127.0.0.1:5000",
   "http://localhost:3000",
   "http://72.60.219.218:8080",
+  "http://72.60.219.218:5055",
 ];
 
 const parseAllowedOrigins = () => {
@@ -15,6 +18,8 @@ const parseAllowedOrigins = () => {
 };
 
 const localhostPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+const lanPattern =
+  /^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+)(:\d+)?$/;
 
 const isNativeTvAppOrigin = (origin) =>
   origin === "null" ||
@@ -25,7 +30,7 @@ const isNativeTvAppOrigin = (origin) =>
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || isNativeTvAppOrigin(origin)) {
+    if (!origin || isNativeTvAppOrigin(origin) || lanPattern.test(origin)) {
       return callback(null, true);
     }
 
